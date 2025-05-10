@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Product Sync Dashboard</title>
+        <css src="MagoArab_ProductSync::css/source/sync.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="MagoArab\ProductSync\Block\Adminhtml\Sync\Progress" name="magoarab_productsync_sync_progress" template="MagoArab_ProductSync::sync/progress.phtml"/>
+            <block class="MagoArab\ProductSync\Block\Adminhtml\Sync\Status" name="magoarab_productsync_sync_status" template="MagoArab_ProductSync::sync/status.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

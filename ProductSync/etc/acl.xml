@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="MagoArab_ProductSync::magoarab" title="MagoArab" sortOrder="90">
+                    <resource id="MagoArab_ProductSync::productsync" title="Product Sync" sortOrder="10">
+                        <resource id="MagoArab_ProductSync::sync" title="Sync Dashboard" sortOrder="10" />
+                        <resource id="MagoArab_ProductSync::sync_log" title="Sync Logs" sortOrder="20" />
+                        <resource id="MagoArab_ProductSync::config" title="Configuration" sortOrder="30" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="MagoArab_ProductSync::config_section" title="MagoArab Product Sync Section" sortOrder="80" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

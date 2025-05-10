@@ -1,0 +1,132 @@
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+
+//
+// Sync Dashboard Styles
+//
+
+.sync-dashboard {
+    padding: 20px;
+    
+    .sync-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        
+        h2 {
+            margin: 0;
+        }
+    }
+    
+    .sync-info {
+        background: #f8f8f8;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .sync-schedule {
+        margin-bottom: 15px;
+        font-style: italic;
+        color: #666;
+    }
+    
+    .sync-progress-container {
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        
+        &.in-progress {
+            .sync-progress-bar {
+                animation: progress-animation 1.5s linear infinite;
+                background-image: linear-gradient(
+                    -45deg,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.2) 75%,
+                    transparent 75%,
+                    transparent
+                );
+                background-size: 50px 50px;
+            }
+        }
+    }
+    
+    .sync-progress-status {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    .sync-progress-bar-container {
+        height: 20px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .sync-progress-bar {
+        height: 100%;
+        background-color: #1979c3;
+        transition: width 0.5s ease-in-out;
+        width: 0;
+    }
+    
+    .sync-progress-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        
+        .stat-item {
+            flex: 1;
+            min-width: 120px;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            
+            .stat-label {
+                font-weight: bold;
+                margin-right: 5px;
+            }
+            
+            .stat-value {
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+//
+// Animation Keyframes
+//
+@keyframes progress-animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+//
+// System Config Sync Button
+//
+.sync-button-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    .sync-status {
+        font-style: italic;
+        color: #006400;
+    }
+}

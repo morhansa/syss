@@ -1,0 +1,64 @@
+<?php
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+
+/** @var \MagoArab\ProductSync\Block\Adminhtml\Sync\Status $block */
+?>
+
+<div class="sync-history">
+    <h3><?= $block->escapeHtml(__('Recent Sync History')) ?></h3>
+    <div class="sync-history-content">
+        <?php $logs = $block->getLatestSyncLogs(); ?>
+        <?php if ($logs->getSize()): ?>
+            <table class="data-grid">
+                <thead>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Started At')) ?></th>
+                        <th><?= $block->escapeHtml(__('Finished At')) ?></th>
+                        <th><?= $block->escapeHtml(__('Status')) ?></th>
+                        <th><?= $block->escapeHtml(__('Products')) ?></th>
+                        <th><?= $block->escapeHtml(__('Updated')) ?></th>
+                        <th><?= $block->escapeHtml(__('Created')) ?></th>
+                        <th><?= $block->escapeHtml(__('Errors')) ?></th>
+                        <th><?= $block->escapeHtml(__('Details')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($logs as $log): ?>
+                        <tr>
+                            <td><?= $block->escapeHtml($block->formatDate($log->getStartedAt())) ?></td>
+                            <td><?= $log->getFinishedAt() ? $block->escapeHtml($block->formatDate($log->getFinishedAt())) : '-' ?></td>
+                            <td>
+                                <span class="grid-severity-<?= $block->escapeHtmlAttr($block->getStatusClass($log->getStatus())) ?>">
+                                    <span><?= $block->escapeHtml((string)$block->getStatusLabel($log->getStatus())) ?></span>
+                                </span>
+                            </td>
+                            <td><?= $block->escapeHtml($log->getTotalProducts()) ?></td>
+                            <td><?= $block->escapeHtml($log->getUpdatedProducts()) ?></td>
+                            <td><?= $block->escapeHtml($log->getCreatedProducts()) ?></td>
+                            <td><?= $block->escapeHtml($log->getErrorCount()) ?></td>
+                            <td>
+                                <?php if ($log->getErrorMessage()): ?>
+                                    <div class="sync-log-details" title="<?= $block->escapeHtmlAttr($log->getErrorMessage()) ?>">
+                                        <span><?= $block->escapeHtml(__('View Error')) ?></span>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div class="view-all">
+                <a href="<?= $block->escapeUrl($block->getLogsUrl()) ?>"><?= $block->escapeHtml(__('View All Logs')) ?></a>
+            </div>
+        <?php else: ?>
+            <div class="message info">
+                <span><?= $block->escapeHtml(__('No sync history available.')) ?></span>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/consumer.xsd">
+    <consumer name="magoarab_productsync_product" 
+              queue="magoarab_productsync_product" 
+              connection="db" 
+              handler="MagoArab\ProductSync\Model\Queue\Consumer::process" 
+              consumerInstance="Magento\Framework\MessageQueue\Consumer"
+              maxMessages="1000"/>
+</config>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magoarab_productsync_log" resource="default" engine="innodb" comment="Product Sync Log Table">
+        <column xsi:type="int" name="log_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Log ID"/>
+        <column xsi:type="timestamp" name="started_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Started At"/>
+        <column xsi:type="timestamp" name="finished_at" on_update="false" nullable="true"
+                comment="Finished At"/>
+        <column xsi:type="smallint" name="status" unsigned="true" nullable="false" default="0"
+                comment="Status (0:running, 1:completed, 2:failed)"/>
+        <column xsi:type="int" name="total_products" unsigned="true" nullable="false" default="0"
+                comment="Total Products"/>
+        <column xsi:type="int" name="processed_products" unsigned="true" nullable="false" default="0"
+                comment="Processed Products"/>
+        <column xsi:type="int" name="updated_products" unsigned="true" nullable="false" default="0"
+                comment="Updated Products"/>
+        <column xsi:type="int" name="created_products" unsigned="true" nullable="false" default="0"
+                comment="Created Products"/>
+        <column xsi:type="int" name="error_count" unsigned="true" nullable="false" default="0"
+                comment="Error Count"/>
+        <column xsi:type="text" name="error_message" nullable="true" comment="Error Message"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="log_id"/>
+        </constraint>
+        <index referenceId="MAGOARAB_PRODUCTSYNC_LOG_STARTED_AT" indexType="btree">
+            <column name="started_at"/>
+        </index>
+    </table>
+</schema>

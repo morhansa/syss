@@ -1,0 +1,24 @@
+<?php
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+
+/** @var \MagoArab\ProductSync\Block\Adminhtml\System\Config\SyncButton $block */
+?>
+<div class="sync-button-container">
+    <?= $block->getButtonHtml() ?>
+    <span class="sync-status"></span>
+</div>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "MagoArab_ProductSync/js/sync-button": {
+            "ajaxUrl": "<?= $block->escapeJs($block->getAjaxUrl()) ?>"
+        }
+    }
+}
+</script>

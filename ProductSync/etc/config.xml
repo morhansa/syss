@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magoarab_productsync>
+            <general>
+                <enabled>1</enabled>
+                <is_schedule_enabled>0</is_schedule_enabled>
+                <cron_expr>0 */6 * * *</cron_expr>
+                <batch_size>50</batch_size>
+            </general>
+            <mapping>
+                <sku_column>sku</sku_column>
+                <name_column>name</name_column>
+                <qty_column>qty</qty_column>
+                <price_column>price</price_column>
+                <description_column>description</description_column>
+            </mapping>
+            <advanced>
+                <create_new_products>1</create_new_products>
+                <default_product_type>simple</default_product_type>
+                <default_status>1</default_status>
+                <default_visibility>4</default_visibility>
+                <log_retention_days>30</log_retention_days>
+            </advanced>
+        </magoarab_productsync>
+    </default>
+</config>

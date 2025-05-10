@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="MagoArab_ProductSync::magoarab" title="MagoArab" translate="title" module="MagoArab_ProductSync" sortOrder="90" resource="MagoArab_ProductSync::magoarab"/>
+        <add id="MagoArab_ProductSync::productsync" title="Product Sync" translate="title" module="MagoArab_ProductSync" sortOrder="10" parent="MagoArab_ProductSync::magoarab" resource="MagoArab_ProductSync::productsync"/>
+        <add id="MagoArab_ProductSync::sync" title="Sync Dashboard" translate="title" module="MagoArab_ProductSync" sortOrder="10" parent="MagoArab_ProductSync::productsync" action="magoarab_productsync/sync" resource="MagoArab_ProductSync::sync"/>
+        <add id="MagoArab_ProductSync::sync_log" title="Sync Logs" translate="title" module="MagoArab_ProductSync" sortOrder="20" parent="MagoArab_ProductSync::productsync" action="magoarab_productsync/log" resource="MagoArab_ProductSync::sync_log"/>
+        <add id="MagoArab_ProductSync::config" title="Configuration" translate="title" module="MagoArab_ProductSync" sortOrder="30" parent="MagoArab_ProductSync::productsync" action="adminhtml/system_config/edit/section/magoarab_productsync" resource="MagoArab_ProductSync::config"/>
+    </menu>
+</config>

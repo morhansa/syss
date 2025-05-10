@@ -1,0 +1,52 @@
+<?php
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+
+<?php if ($block->getProduct() && $block->getProduct()->getData('synced_from_sheet')): ?>
+<div class="product-sync-badge" title="<?= $block->escapeHtmlAttr(__('This product was synchronized from Google Sheets')) ?>">
+    <span class="sync-icon"></span>
+    <span class="sync-text"><?= $block->escapeHtml(__('Auto-Synced')) ?></span>
+    <?php if ($syncDate = $block->getProduct()->getData('last_synced_at')): ?>
+    <div class="sync-date"><?= $block->escapeHtml(__('Last Updated: %1', $block->formatDate($syncDate, \IntlDateFormatter::SHORT, false))) ?></div>
+    <?php endif; ?>
+</div>
+
+<style>
+    .product-sync-badge {
+        display: inline-block;
+        background-color: #e8f5e9;
+        border: 1px solid #c8e6c9;
+        border-radius: 3px;
+        padding: 2px 8px;
+        margin: 5px 0;
+        font-size: 0.85em;
+        color: #388e3c;
+    }
+    
+    .sync-icon {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14"><path fill="%23388e3c" d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>');
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+    
+    .sync-text {
+        vertical-align: middle;
+    }
+    
+    .sync-date {
+        font-size: 0.9em;
+        margin-top: 2px;
+        opacity: 0.85;
+    }
+</style>
+<?php endif; ?>

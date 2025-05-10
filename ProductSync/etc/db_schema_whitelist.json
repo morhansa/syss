@@ -1,0 +1,22 @@
+{
+    "magoarab_productsync_log": {
+        "column": {
+            "log_id": true,
+            "started_at": true,
+            "finished_at": true,
+            "status": true,
+            "total_products": true,
+            "processed_products": true,
+            "updated_products": true,
+            "created_products": true,
+            "error_count": true,
+            "error_message": true
+        },
+        "index": {
+            "MAGOARAB_PRODUCTSYNC_LOG_STARTED_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magoarab" translate="label" sortOrder="100">
+            <label>MagoArab</label>
+        </tab>
+        <section id="magoarab_productsync" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Product Sync</label>
+            <tab>magoarab</tab>
+            <resource>MagoArab_ProductSync::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sheet_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Sheet URL</label>
+                    <comment>Enter the Google Sheets URL in the following format: https://docs.google.com/spreadsheets/d/KEY/edit#gid=0</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="is_schedule_enabled" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Scheduled Sync</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cron_expr" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sync Schedule</label>
+                    <comment>Enter cron expression (e.g., 0 2 * * * for daily at 2 AM)</comment>
+                    <depends>
+                        <field id="is_schedule_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="batch_size" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Batch Size</label>
+                    <comment>Number of products to process in each batch (lower value for less server load)</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
+                </field>
+                <field id="last_sync" translate="label" type="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Last Sync</label>
+                    <frontend_model>MagoArab\ProductSync\Block\Adminhtml\System\Config\LastSync</frontend_model>
+                </field>
+                <field id="sync_now" translate="label" type="button" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sync Now</label>
+                    <frontend_model>MagoArab\ProductSync\Block\Adminhtml\System\Config\SyncButton</frontend_model>
+                </field>
+            </group>
+            <group id="mapping" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Field Mapping</label>
+                <field id="sku_column" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SKU Column</label>
+                    <comment>Column name for SKU in the Google Sheet</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="name_column" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Name Column</label>
+                    <comment>Column name for Product Name in the Google Sheet</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="qty_column" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Quantity Column</label>
+                    <comment>Column name for Quantity in the Google Sheet</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="price_column" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Column</label>
+                    <comment>Column name for Price in the Google Sheet</comment>
+                </field>
+                <field id="description_column" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Description Column</label>
+                    <comment>Column name for Description in the Google Sheet</comment>
+                </field>
+            </group>
+            <group id="advanced" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Advanced Settings</label>
+                <field id="create_new_products" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Create New Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If enabled, new products will be created when not found in the catalog</comment>
+                </field>
+                <field id="default_attribute_set" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Attribute Set</label>
+                    <source_model>Magento\Catalog\Model\Product\AttributeSet\Options</source_model>
+                    <comment>Default attribute set for new products</comment>
+                    <depends>
+                        <field id="create_new_products">1</field>
+                    </depends>
+                </field>
+                <field id="default_product_type" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Product Type</label>
+                    <source_model>MagoArab\ProductSync\Model\Config\Source\ProductType</source_model>
+                    <comment>Default product type for new products</comment>
+                    <depends>
+                        <field id="create_new_products">1</field>
+                    </depends>
+                </field>
+                <field id="default_status" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Status</label>
+                    <source_model>Magento\Catalog\Model\Product\Attribute\Source\Status</source_model>
+                    <comment>Default status for new products</comment>
+                    <depends>
+                        <field id="create_new_products">1</field>
+                    </depends>
+                </field>
+                <field id="default_visibility" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Visibility</label>
+                    <source_model>Magento\Catalog\Model\Product\Visibility</source_model>
+                    <comment>Default visibility for new products</comment>
+                    <depends>
+                        <field id="create_new_products">1</field>
+                    </depends>
+                </field>
+                <field id="default_website_ids" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Websites</label>
+                    <source_model>Magento\Store\Model\System\Store</source_model>
+                    <comment>Default websites for new products</comment>
+                    <depends>
+                        <field id="create_new_products">1</field>
+                    </depends>
+                </field>
+                <field id="log_retention_days" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Log Retention (Days)</label>
+                    <comment>Number of days to keep sync logs</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

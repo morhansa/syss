@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Service Implementations -->
+    <preference for="MagoArab\ProductSync\Api\SyncServiceInterface" type="MagoArab\ProductSync\Model\SyncService" />
+    <preference for="MagoArab\ProductSync\Api\Data\SyncLogInterface" type="MagoArab\ProductSync\Model\SyncLog" />
+    
+    <!-- SyncService Configuration -->
+    <type name="MagoArab\ProductSync\Model\SyncService">
+        <arguments>
+            <argument name="publisher" xsi:type="object">Magento\Framework\MessageQueue\Publisher</argument>
+        </arguments>
+    </type>
+    
+    <!-- Queue Consumer -->
+    <type name="Magento\Framework\MessageQueue\MergerFactory">
+        <arguments>
+            <argument name="mergers" xsi:type="array">
+                <item name="magoarab.productsync.product" xsi:type="string">Magento\Framework\MessageQueue\Merger</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <!-- CRON Consumer -->
+    <type name="Magento\Framework\Cron\CronLoggerInterface">
+        <arguments>
+            <argument name="consumerNames" xsi:type="array">
+                <item name="magoarab_productsync_sync" xsi:type="string">magoarab_productsync_sync</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <!-- Console Command Registration -->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="magoarab_productsync_sync" xsi:type="object">MagoArab\ProductSync\Console\Command\SyncProducts</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <!-- Cleanup old logs -->
+    <type name="MagoArab\ProductSync\Cron\SyncProducts">
+        <arguments>
+            <argument name="logger" xsi:type="object">MagoArab\ProductSync\Logger\Logger</argument>
+        </arguments>
+    </type>
+    
+    <!-- Custom Logger -->
+    <virtualType name="MagoArab\ProductSync\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/magoarab_productsync.log</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="MagoArab\ProductSync\Logger\Logger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">magoarab_productsync</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">MagoArab\ProductSync\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

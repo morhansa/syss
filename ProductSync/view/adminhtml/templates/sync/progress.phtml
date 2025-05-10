@@ -1,0 +1,99 @@
+<?php
+/**
+ * @category  MagoArab
+ * @package   MagoArab_ProductSync
+ * @author    MagoArab Developer
+ * @copyright Copyright (c) 2025 MagoArab (https://www.magoarab.com)
+ */
+
+/** @var \MagoArab\ProductSync\Block\Adminhtml\Sync\Progress $block */
+?>
+
+<div class="sync-dashboard">
+    <div class="sync-status-container">
+        <?php if (!$block->isModuleEnabled()): ?>
+            <div class="message message-warning">
+                <div><?= $block->escapeHtml(__('Product Sync module is currently disabled. Please enable it in the configuration.')) ?></div>
+            </div>
+        <?php else: ?>
+            <div class="sync-header">
+                <h2><?= $block->escapeHtml(__('Product Synchronization Status')) ?></h2>
+                <div class="sync-actions">
+                    <button id="sync-button" class="action-primary" <?= $block->isSyncInProgress() ? 'style="display:none;"' : '' ?>>
+                        <span><?= $block->escapeHtml(__('Sync Now')) ?></span>
+                    </button>
+                    <button id="stop-sync-button" class="action-secondary" <?= !$block->isSyncInProgress() ? 'style="display:none;"' : '' ?>>
+                        <span><?= $block->escapeHtml(__('Stop Sync')) ?></span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="sync-info">
+                <div class="sync-schedule">
+                    <span><?= $block->escapeHtml($block->getNextRunTimeDisplay()) ?></span>
+                </div>
+                
+                <div id="sync-progress-container" 
+                     class="sync-progress-container<?= $block->isSyncInProgress() ? ' in-progress' : '' ?>"
+                     data-mage-init='{"MagoArab_ProductSync/js/sync/progress": {
+                        "statusUrl": "<?= $block->escapeUrl($block->getStatusUrl()) ?>",
+                        "isInProgress": <?= $block->isSyncInProgress() ? 'true' : 'false' ?>,
+                        "checkInterval": 3000
+                     }}'>
+                    
+                    <div class="sync-progress-status">
+                        <span id="sync-status-text" class="sync-status-text">
+                            <?php if ($block->isSyncInProgress()): ?>
+                                <?= $block->escapeHtml(__('Sync in progress...')) ?>
+                            <?php else: ?>
+                                <?= $block->escapeHtml(__('Sync is not running')) ?>
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                    
+                    <div class="sync-progress-bar-container">
+                        <div id="sync-progress-bar" class="sync-progress-bar" style="width: <?= $block->escapeHtmlAttr($block->getSyncProgress()['percent']) ?>%"></div>
+                    </div>
+                    
+                    <div class="sync-progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-label"><?= $block->escapeHtml(__('Total:')) ?></span>
+                            <span id="sync-total" class="stat-value"><?= $block->escapeHtml($block->getSyncProgress()['total']) ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label"><?= $block->escapeHtml(__('Processed:')) ?></span>
+                            <span id="sync-processed" class="stat-value"><?= $block->escapeHtml($block->getSyncProgress()['processed']) ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label"><?= $block->escapeHtml(__('Updated:')) ?></span>
+                            <span id="sync-updated" class="stat-value"><?= $block->escapeHtml($block->getSyncProgress()['updated']) ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label"><?= $block->escapeHtml(__('Created:')) ?></span>
+                            <span id="sync-created" class="stat-value"><?= $block->escapeHtml($block->getSyncProgress()['created']) ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label"><?= $block->escapeHtml(__('Errors:')) ?></span>
+                            <span id="sync-errors" class="stat-value"><?= $block->escapeHtml($block->getSyncProgress()['errors']) ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+{
+    "#sync-button": {
+        "MagoArab_ProductSync/js/sync/sync": {
+            "syncUrl": "<?= $block->escapeUrl($block->getManualSyncUrl()) ?>"
+        }
+    },
+    "#stop-sync-button": {
+        "MagoArab_ProductSync/js/sync/stop-sync": {
+            "stopUrl": "<?= $block->escapeUrl($block->getUrl('magoarab_productsync/sync/stop')) ?>"
+        }
+    }
+}
+</script>
